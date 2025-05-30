@@ -12,7 +12,7 @@ on:
       ref:
         description: 'Git reference (branch, tag, or commit SHA)'
         required: false
-        default: main
+        default: master
         type: string
 
       python_version:
@@ -32,6 +32,7 @@ jobs:
         with:
           repository: ${{ inputs.repo }}
           ref: ${{ inputs.ref }}
+          fetch-depth: 0
           
       - name: ⚙️ Install system dependencies
         run: sudo apt update && sudo apt install -y libpq-dev gcc
