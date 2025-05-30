@@ -1,6 +1,15 @@
-# 🧱 repo-bundler-py
+# 🧱 Repo Bundler - CI Artifact Versioning
 
-GitHub Actions workflow for generating and publishing versioned artifacts from Python applications during the CI flow.
+This GitHub Actions workflow automates the process of cloning a repository, running tests, and bundling the project into an artifact with versioning. It is designed to be reused or dispatched for CI/CD flows.
+
+You can trigger the workflow manually here: [Workflow URL](actions/workflows/dispatch.yml)
+
+## Usage Example
+
+You can trigger the workflow manually or call it from another workflow.
+
+Workflow Dispatch URL
+URL: https://github.com/hmanzur/repo-bundler-py/actions/workflows/blank.yml
 
 ## 🚀 Purpose
 
@@ -15,33 +24,39 @@ It's designed to support CI pipelines that need consistent versioned artifacts, 
 
 ## 🎓 Used In
 
-This workflow is part of the [SoftServe PeEx program](https://softserveinc.github.io/) and is being used to build and version artifacts from:
+This workflow is part of the [SoftServe PeEx program](https://peex.softserveinc.com) and is being used to build and version artifacts from:
 
 👉 [edonosotti/ci-cd-tutorial-sample-app](https://github.com/edonosotti/ci-cd-tutorial-sample-app)
 
-## 🚀 How to Use
+## Inputs
 
-This workflow runs manually via the GitHub UI under the **Actions** tab.
+| Name            | Description                               | Required       | Default                                      |
+|-----------------|-------------------------------------------|----------      |------------------------------------          |
+| `repo`          | Repository to clone (in `owner/repo` format)    | ✅       | `edonosotti/ci-cd-tutorial-sample-app` |
+| `ref`           | Git reference to checkout (branch, tag, or SHA) | ✅       | `main`                                 |
+| `python_version`| Python version to use in the workflow           | ❌       | `3.8`                                  |
 
-### Inputs
 
-| Name          | Description                                  | Required | Default             |
-|---------------|----------------------------------------------|----------|---------------------|
-| `repo`        | Repository to clone (in `owner/repo` format) | ✅       | N/A                 |
-| `ref`         | Git reference (branch, tag, or SHA)          | ✅       | N/A                 |
-| `subdir`      | Optional subdirectory to archive             | ❌       | `.` (entire repo)   |
+## How it works
 
-To trigger the workflow:
+1. Clones the specified repository and ref.
 
-1. Go to the **Actions** tab.
-2. Select `📦 Build and Bundle Python App`.
-3. Click **Run workflow**.
-4. Fill in the required inputs.
+2. Creates a Python virtual environment.
 
-## 📦 Output
+3. Installs dependencies.
 
-The workflow generates an archive (e.g., `sample-app-v1.2.3.tar.gz`) and uploads it to the run's **Artifacts** section. Versions are generated using Git metadata, e.g.: `v1.2.3+5.gabc1234
+4. Runs database migrations.
 
-## 📝 License
+5. Runs unit tests.
 
-MIT License
+6. Computes a version string based on git tags.
+
+7. Packages the project into a tarball artifact.
+
+8. Uploads the artifact to GitHub Actions.
+
+## References
+
+- [Reusing workflows - GitHub Docs](https://docs.github.com/en/actions/using-workflows/reusing-workflows)
+
+- [Workflow dispatch - GitHub Docs](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_dispatch)
