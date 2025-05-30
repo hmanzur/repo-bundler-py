@@ -1,0 +1,77 @@
+name: 📦 Build and Bundle Python App
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: 'Repository to clone (e.g. owner/repo)'
+        required: true
+        type: string
+      ref:
+        description: 'Git reference (branch, tag, or commit SHA)'
+        required: true
+        type: string
+      python_version:
+          description: 'Python version to use'
+          required: false
+          default: '3.8'
+          type: string
+          
+jobs:
+  test:
+    name: 🧪 Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔄 Checkout target repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.repo }}
+          ref: ${{ inputs.ref }}
+          
+      - name: ⚙️ Install system dependencies
+        run: sudo apt update && sudo apt install -y libpq-dev gcc
+
+      - name: 🐍 Set up Python Environment
+        uses: getsentry/action-setup-venv@v2.1.1
+        id: venv
+        with:
+          python-version: ${{ inputs.python_version }}
+          cache-dependency-path: |
+            requirements.txt
+          install-cmd: pip install -r requirements.txt
+          
+      - name: 🛠 Run database migrations
+        run: flask db upgrade
+
+      - name: 🧪 Run unit tests
+        run: python -m unittest discover
+
+  bundle: 
+    name: 📦 Bundle Application
+    needs:
+      - test
+    runs-on: ubuntu-latest
+    steps: 
+      - name: 🔄 Checkout target repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.repo }}
+          ref: ${{ inputs.ref }}
+
+      - name: 🕑 Compute version
+        id: version
+        run: |
+          version=$(git describe --tags --long --always --dirty)
+          echo "VERSION=${version}" >> $GITHUB_ENV
+          echo "version=$version" >> $GITHUB_OUTPUT
+      - name: 📦 Create archive
+        run: |
+          mkdir -p dist
+          tar -czf "dist/${{ inputs.repo##*/ }}-${{ needs.test.outputs.version }}.tar.gz" .
+
+      - name: 📤 Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.repo##*/ }}-${{ needs.test.outputs.version }}
+          path: dist/
