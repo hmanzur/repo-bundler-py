@@ -2,6 +2,11 @@
 
 This GitHub Actions workflow automates the process of cloning a repository, running tests, and bundling the project into an artifact with versioning. It is designed to be reused or dispatched for CI/CD flows.
 
+> ℹ️ Note:
+A fork of the original repository was created because it was outdated and the provided example no longer worked. The workflow now uses [hmanzur/ci-cd-tutorial-sample-app](https://github.com/hmanzur/ci-cd-tutorial-sample-app) as the reference repository.
+
+
+
 ## Usage Example
 
 You can trigger the workflow manually here: [Workflow](actions/workflows/dispatch.yml)
@@ -29,7 +34,7 @@ This workflow is part of the [SoftServe PeEx program](https://peex.softserveinc.
 |-----------------|-------------------------------------------|----------      |------------------------------------          |
 | `repo`          | Repository to clone (in `owner/repo` format)    | ✅       | `edonosotti/ci-cd-tutorial-sample-app` |
 | `ref`           | Git reference to checkout (branch, tag, or SHA) | ✅       | `master`                                 |
-| `python_version`| Python version to use in the workflow           | ❌       | `3.8`                                  |
+| `python_version`| Python version to use in the workflow           | ❌       | `3.13`                                  |
 
 
 ## How it works
