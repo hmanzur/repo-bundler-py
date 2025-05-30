@@ -6,13 +6,13 @@ on:
       repo:
         description: 'Repository to clone (e.g. owner/repo)'
         required: false
-        default: edonosotti/ci-cd-tutorial-sample-app
+        default: hmanzur/ci-cd-tutorial-sample-app.git
         type: string
 
       ref:
         description: 'Git reference (branch, tag, or commit SHA)'
         required: false
-        default: master
+        default: main
         type: string
 
       python_version:
