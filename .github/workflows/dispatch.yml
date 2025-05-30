@@ -70,7 +70,13 @@ jobs:
         with:
           repository: ${{ inputs.repo }}
           ref: ${{ inputs.ref }}
+          path: './app'
       
+      - name: Get code repository name
+        id: repo-name
+        run: echo "CODE_REPO_NAME=$(echo ${{ inputs.repo }} | cut -d'/' -f2)" >> $GITHUB_OUTPUT
+
+
       - name: 🔐 Log in to GitHub Container Registry
         uses: docker/login-action@v3.4.0
         with:
@@ -81,6 +87,6 @@ jobs:
       - name: 🐳 Build & Push Docker image
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: './app'
           push: true
-          tags: ghcr.io/${{ github.repository }}:${{ github.sha }}
+          tags: ghcr.io/${{ github.repository_owner }}/${{ steps.repo-name.outputs.CODE_REPO_NAME }}:${{ github.sha }}
