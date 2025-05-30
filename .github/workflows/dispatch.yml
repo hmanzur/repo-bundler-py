@@ -50,7 +50,9 @@ jobs:
         run: flask db upgrade
 
       - name: 🧪 Run unit tests
-        run: python -m unittest discover
+        run: |
+          python seed.py 
+          python -m unittest discover
 
   bundle: 
     name: 📦 Bundle Application
