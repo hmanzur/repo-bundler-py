@@ -20,7 +20,12 @@ on:
           required: false
           default: '3.13'
           type: string
-          
+
+permissions:
+  packages: write
+  contents: read
+
+
 jobs:
   test:
     name: 🧪 Run Tests
