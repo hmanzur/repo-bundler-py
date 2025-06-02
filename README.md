@@ -24,7 +24,7 @@ It's designed to support CI pipelines that need consistent versioned artifacts, 
 
 ## 🎓 Used In
 
-This workflow is part of the [SoftServe PeEx program](https://peex.softserveinc.com) and is being used to build and version artifacts from:
+This workflow is being used to build and version artifacts from:
 
 👉 [edonosotti/ci-cd-tutorial-sample-app](https://github.com/edonosotti/ci-cd-tutorial-sample-app)
 
