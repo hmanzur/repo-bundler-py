@@ -1,5 +1,7 @@
 # 🧱 Repo Bundler - CI Artifact Versioning
 
+[![📦 Build and Bundle Python App](https://github.com/hmanzur/repo-bundler-py/actions/workflows/dispatch.yml/badge.svg)](https://github.com/hmanzur/repo-bundler-py/actions/workflows/dispatch.yml)
+
 This GitHub Actions workflow automates the process of cloning a repository, running tests, and bundling the project into an artifact with versioning. It is designed to be reused or dispatched for CI/CD flows.
 
 > ℹ️ Note:
